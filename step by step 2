@@ -1,0 +1,37 @@
+// ==UserScript==
+// @name        step by step 2
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://yandex.ru/*
+// @grant        none
+// ==/UserScript==
+
+console.log ("Даем кнопке Найти имя zhmi");
+let zhmi = document.getElementsByClassName("button mini-suggest__button button_theme_websearch button_size_ws-head i-bem button_js_inited")[0];
+
+console.log ("Задаем массив ключевых слов для поиска");
+let keywords = ["Гобой", "Как звучит флейта", "Что такое валторна", "Как выглядит тромбон", "Музыкальные диктанты онлайн", "Виолончель"];
+
+let keyword  = keywords[getRandom(0,keywords.length)];
+
+console.log ("Вводим текст в поле для поиска и жмем Найти");
+  if (zhmi!=undefined){
+   document.getElementsByName('text')[0].value = "keyword";
+   setTimeout(()=> zhmi.click(), getRandom(3000,10000));
+}
+
+console.log ("Даем имя links коллекции полученных ссылок ");
+let links = document.links;
+console.log ("Перебираем коллекцию ссылок links   , когда находим нужную ссыылку, то кликаем по ней и выходим");
+for(let i=0; i<links.length; i++){
+    if(links[i].href.indexOf('xn----7sbab5aqcbiddtdj1e1g.xn--p1ai')!=-1){
+       let link = links[i];
+        setTimeout(()=>link.click(), getRandom(3000,10000));
+        break;
+    }
+}
+function getRandom(min,max){
+    return Math.floor(Math.random()*(max-min)+min);
+}

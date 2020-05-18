@@ -1,0 +1,24 @@
+// ==UserScript==
+// @name       lssn 0805
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://yandex.ru/*
+// @grant        none
+// ==/UserScript==
+
+
+let zmi=document.querySelector(".search2__button").firstElementChild; //сохраняем кнопку "Найти" в переменную zmi
+
+if (zmi!=undefined){
+   document.getElementsByName('text')[0].value = "Гобой";
+     zmi.click()
+}
+let links = document.links;
+for(let i=0; i<links.length; i++){
+    if(links[i].href.indexOf('xn----7sbab5aqcbiddtdj1e1g.xn--p1ai')!=-1){
+  links[i].click();
+   break;
+       }
+    }

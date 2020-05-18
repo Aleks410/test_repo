@@ -1,0 +1,69 @@
+// ==UserScript==
+// @name        lssn 1305
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://yandex.ru/*
+// @match        https://xn----7sbab5aqcbiddtdj1e1g.xn--p1ai/*
+// @grant        none
+// ==/UserScript==
+
+let zmi=document.querySelector(".search2__button").firstElementChild; //сохраняем кнопку "Найти" в переменную zmi
+let keywords = ["Гобой", "Как звучит флейта", "Что такое валторна", "Как выглядит тромбон", "Музыкальные диктанты онлайн", "Виолончель"];
+let keyword = keywords[getRandom(0,keywords.length)];//получаем случайное число из массива ключевых слов
+let goNextPage = true; // переменная перехода на след страницу
+
+if (zmi!=undefined){
+   writeWord(keyword);//печатаем в поле поиска случайное ключевое слово
+}
+
+let links = document.links; //даем имя линкс коллекции выведенных по ключевому слову ссылок
+//далее  перебираем коллекцию ссылок ищем музыкалку
+for(let i=0; i<links.length; i++){
+    if(links[i].href.indexOf('xn----7sbab5aqcbiddtdj1e1g.xn--p1ai')!=-1){
+       let link = links[i];//даем имя линк найденной ссылке на музыкалку
+        setTimeout(()=>link.click(),getRandom(3000,10000)); //ждем 3-10 сек чтобы все ссылки загрузились и кликаем по музыкалке
+        break;
+    }
+}
+// создаем функцию перехода на след страницу
+//когда поиск доходит до 10-й страницы то выходим
+    if (goNextPage) setTimeout(()=>{
+        if (document.getElementsByClassName('YyVfkd')[0].innerText == 10) logo.click(); //НАЙТИ КНОПКУ ПЕРЕХОДА СТРАНИЦЫ И ЭЛЕМЕНТЫ 10 СТРАНИЦЫ В НЕЙ ДЛЯ ЯНДЕКСЕ!!! ИВОЗВРАТ НА ГЛ СТРАНИЦУ 1-00 !!!!
+        else pnnext.click();
+    }, getRandom(3000,10000));//ЗАДЕРЖКА С КЛИКАНИЕМ СЛЕД.СТРАНИЦЫ
+
+
+//создаем ф-цию  для генерации случ чисел от мин до макс предела
+function getRandom(min,max){
+    return Math.floor(Math.random()*(max-min)+min);//получаем округленное в меньшую сторону случайное число в пределах заданного массива
+}
+
+//создаем ф-цию к-рая  печатает ключевое слове по буквам через интервал 300
+function writeWord(keyword){
+  let i = 0;
+  let timerId = setInterval(()=>{
+    document.getElementsByName('text')[0].value += keyword[i];
+    i++;
+    if (i==keyword.length) {
+        clearInterval(timerId);// если текст напечатан интервал обнуляется
+       zmi.click(); //жмем  после того как напечатается кейворд и кликаем по музыкалке
+    }
+  },300);
+}
+
+/*
+if (location.host == "yandex.ru"){
+    getGooglePage(); //заменить
+}
+else {
+    if (getRandom(0,100)>20){
+        let index = getRandom(0,links.length);
+        if(links[index].href.indexOf('xn----7sbab5aqcbiddtdj1e1g.xn--p1ai')!=-1)
+            setTimeout(()=>{links[index].click();},getRandom(3000, 10000));
+        else location.href = 'https://xn----7sbab5aqcbiddtdj1e1g.xn--p1ai/';
+    }
+    else location.href = "https://yandex.ru/";
+}
+*/
